@@ -242,12 +242,12 @@
                     <h3 class="title"><span>自我介紹</span></h3>
                     <p class="content">
                         我是王媚儀，學生期間曾在飲料店工作並擔任畢籌會常務組組長，畢業後進入愛貝斯擔任前端工程師。在一年的工作中參與製作了17個網站專案，接觸各種產業後發現每個客戶對網站都有不同的需求與挑戰。透過與客戶、企劃、設計師的溝通協調來滿足各方需求的過程，讓我漸漸對專案管理產生興趣，也發現自己相較於寫程式，更喜歡需要規劃與溝通的專案管理工作。
-                        <br>
-                        <br>
-                        在專案執行過程中，我展現了快速學習與負責任的態度，也培養出細心的工作習慣。當遇到技術問題時，我能用簡單易懂的方式向企劃說明技術困難點，有效溝通解決問題。加上服務業累積的溝通技巧，讓我在面對客戶時能靈活應對各種狀況。
-                        <br>
-                        <br>
-                        平時我熱愛參觀各種展覽，從中觀察細節與學習創作靈感，也經常瀏覽 WebDesignClip 等設計網站，關注最新的網頁設計趨勢與創意表現手法，並且因自己喜歡製作動畫效果，所以也喜歡觀察其他網站的動畫效果。 
+                    </p>
+                    <p class="content">
+                        學生時期的服務業經驗培養了我快速學習與負責任的態度，面對客人時能熟悉自家產品，給予適切的引導與服務。在專案執行過程中，愛貝斯對網站的嚴格要求培養出我細心的工作習慣。當遇到技術問題時，我能用簡單易懂的方式向企劃說明技術困難點，有效溝通解決問題。
+                    </p>
+                    <p class="content">
+                        平時我熱愛參觀各種展覽，從中觀察細節與汲取創作靈感，也經常瀏覽 WebDesignClip 等設計網站，關注最新的網頁設計趨勢與創意表現手法。因為喜歡製作動畫效果，所以也喜歡研究其他網站的動畫設計，持續提升自己的技術與美感。
                     </p>
                 </div>
             </div>
@@ -573,7 +573,7 @@
             }, 0)
             
             .to(`${itemClass} .titleBox`, {
-                y: "100%",
+                y: "110%",
                 opacity: 1,
                 duration: 0.2,
                 ease: "none"
@@ -606,18 +606,34 @@
 
         // moreArea 動態生成 box
         function createBoxes() {
-            const decoBox = document.querySelector('.moreArea .titleBox .decoBox');
-            const decoBoxWidth = decoBox.offsetWidth;
-            const boxWidth = (document.querySelector('.moreArea .titleBox .box').offsetWidth) + 20;
+            const decoBox = $('.moreArea .titleBox .decoBox');
+            const decoBoxWidth = decoBox.width();
+            let boxWidth = $('.moreArea .titleBox .box').width();
+            let windowWidth = $(window).width();
             
-            const boxCount = Math.floor(decoBoxWidth / boxWidth);
-            
-            decoBox.innerHTML = '';
+            if(windowWidth > 1400){
+                boxWidth += 40;
+            } else if(windowWidth > 1180){
+                boxWidth += 30;
+            }else if(windowWidth > 840){
+                boxWidth += 25;
+            }else{
+                boxWidth += 10;
+            }
+            let boxCount = Math.floor(decoBoxWidth / boxWidth);
 
-            for (let i = 0; i < (boxCount - 1); i++) {
-                const box = document.createElement('div');
-                box.className = 'box';
-                decoBox.appendChild(box);
+
+
+            console.log(boxWidth);
+            console.log(boxCount);
+            
+            // 清空內容
+            decoBox.empty();
+
+            // 創建並添加 box
+            for (let i = 0; i < boxCount; i++) {
+                const box = $('<div></div>').addClass('box');
+                decoBox.append(box);
             }
         }
 
@@ -692,14 +708,6 @@
                 trigger: '.introArea',
                 start: 'top 15%',
                 onEnter: () => document.querySelector('.introArea').classList.add('show'),
-                once: true,
-            }
-        });
-        gsap.to('.projectArea .decoTitle', {
-            scrollTrigger: {
-                trigger: '.projectArea .decoTitle',
-                start: 'top 60%',
-                onEnter: () => document.querySelector('.projectArea .decoTitle').classList.add('show'),
                 once: true,
             }
         });

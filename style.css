@@ -1176,6 +1176,12 @@ header .menuBtn::after {
   -webkit-transform: translateY(0);
           transform: translateY(0);
 }
+@media (max-width: 1180px) {
+  .introArea.show .right .title span {
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
 .introArea.show .right .content {
   opacity: 1;
   -webkit-transform: translateY(0);
@@ -1430,6 +1436,11 @@ header .menuBtn::after {
     padding: 0 0 80px;
   }
 }
+@media (max-width: 480px) {
+  .introArea .right {
+    padding: 0 0 50px;
+  }
+}
 .introArea .right .title {
   padding-left: 40px;
   font-family: "Noto Serif TC", "PMingLiU", serif;
@@ -1483,6 +1494,12 @@ header .menuBtn::after {
   -webkit-transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
   transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
 }
+@media (max-width: 1180px) {
+  .introArea .right .title span {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+  }
+}
 .introArea .right .content {
   padding-left: 150px;
   font-family: "Noto Serif TC", "PMingLiU", serif;
@@ -1490,6 +1507,8 @@ header .menuBtn::after {
   color: #19183B;
   letter-spacing: 2.56px;
   font-weight: 300;
+  text-indent: 2em;
+  line-height: 1.6;
   opacity: 0;
   -webkit-transform: translateY(30px);
           transform: translateY(30px);
@@ -1512,7 +1531,11 @@ header .menuBtn::after {
 @media (max-width: 1180px) {
   .introArea .right .content {
     padding-left: 0;
+    margin-bottom: 12px;
   }
+}
+.introArea .right .content:not(:last-child) {
+  margin-bottom: 20px;
 }
 .introArea .decoTitle {
   font-family: "Padyakke Expanded One", serif;
@@ -1557,7 +1580,7 @@ header .menuBtn::after {
   background-image: url(images/bg50.png);
   background-color: rgba(112, 137, 147, 0.9);
   background-repeat: repeat;
-  padding: 100px 0;
+  padding: 100px 0 0;
 }
 @media (max-width: 1180px) {
   .projectArea {
@@ -1578,10 +1601,6 @@ header .menuBtn::after {
   text-align: center;
   margin-bottom: 50px;
   overflow: hidden;
-}
-.projectArea .decoTitle.show span {
-  -webkit-transform: translateY(0) scaleY(1);
-          transform: translateY(0) scaleY(1);
 }
 @media (max-width: 1600px) {
   .projectArea .decoTitle {
@@ -1608,17 +1627,6 @@ header .menuBtn::after {
     letter-spacing: 4.8px;
     padding: 0 24px;
   }
-}
-.projectArea .decoTitle span {
-  display: inline-block;
-  -webkit-transform: translateY(100%) scaleY(0.7);
-          transform: translateY(100%) scaleY(0.7);
-  -webkit-transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
-  transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
-}
-.projectArea .decoTitle span:nth-child(2) {
-  -webkit-transition-delay: 0.3s;
-          transition-delay: 0.3s;
 }
 .projectArea .projectBox {
   width: calc(50% + 750px);
@@ -1938,16 +1946,15 @@ header .menuBtn::after {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  gap: 40px;
 }
 .moreArea .titleBox .decoBox .box {
   width: 30px;
@@ -1996,6 +2003,7 @@ header .menuBtn::after {
     font-size: 48px;
     letter-spacing: 3.8px;
     padding-top: 20px;
+    margin-left: 20px;
   }
 }
 @media (max-width: 480px) {
