@@ -59,6 +59,13 @@ a {
   text-decoration: none;
 }
 
+h1, h2, h3 {
+  display: block;
+  line-height: normal;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 .outerWrap {
   max-width: 1920px;
   overflow: hidden;

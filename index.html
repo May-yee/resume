@@ -28,7 +28,7 @@
         $(document).ready(function(){
             let loadingSession = sessionStorage.getItem('loading');
 
-            const texts = ['MEI YI WANG', 'PORTFOLIO'];
+            const texts = ['MEI YI WANG', 'RESUME'];
 
             function typeWriter(element, text, speed = 100, callback) {
                 let $word = $(element);
@@ -75,8 +75,8 @@
 
             sessionStorage.setItem('loading','1');
             setTimeout(showLoading, 500);
-            setTimeout(hideLoading, 5500);
-            setTimeout(removeLoading, 6500);
+            setTimeout(hideLoading, 5000);
+            setTimeout(removeLoading, 6000);
         });
     </script>
     <header>
@@ -131,7 +131,7 @@
                 <div class="bottom">
                     <div class="txt">
                         <p>履歷與作品集</p>
-                        <p>王媚儀 MEI YI WANG</p>
+                        <h1>王媚儀 MEI YI WANG</h1>
                     </div>
                     <div class="img">
                         <img src="/images/headshot.jpg" alt="">
@@ -167,7 +167,7 @@
                         <span class="splitWord">U</span>
                         <span class="splitWord">T</span>
                     </div>
-                    <div class="title"><span>關於我</span></div>
+                    <h2 class="title"><span>關於我</span></h2>
                 </div>
 
                 <div class="eduBox">
@@ -186,7 +186,7 @@
                 </div>
 
                 <div class="expBox">
-                    <div class="title"><span>工作經驗</span></div>
+                    <h3 class="title"><span>工作經驗</span></h3>
 
                     <div class="content">
                         <div class="expItem">
@@ -239,7 +239,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <div class="title"><span>自我介紹</span></div>
+                    <h3 class="title"><span>自我介紹</span></h3>
                     <p class="content">
                         我是王媚儀，學生期間曾在飲料店工作並擔任畢籌會常務組組長，畢業後進入愛貝斯擔任前端工程師。在一年的工作中參與製作了17個網站專案，接觸各種產業後發現每個客戶對網站都有不同的需求與挑戰。透過與客戶、企劃、設計師的溝通協調來滿足各方需求的過程，讓我漸漸對專案管理產生興趣，也發現自己相較於寫程式，更喜歡需要規劃與溝通的專案管理工作。
                         <br>
@@ -255,10 +255,10 @@
         </section>
 
         <section class="projectArea" id="projectArea">
-            <div class="decoTitle">
+            <h2 class="decoTitle">
                 <span>WEB</span>
                 <span>PROJECT</span>
-            </div>
+            </h2>
             
             <div class="projectBox">
                 <div class="projectItem projectItem1">
@@ -606,9 +606,9 @@
 
         // moreArea 動態生成 box
         function createBoxes() {
-            const decoBox = document.querySelector('.titleBox .decoBox');
+            const decoBox = document.querySelector('.moreArea .titleBox .decoBox');
             const decoBoxWidth = decoBox.offsetWidth;
-            const boxWidth = (document.querySelector('.titleBox .box').offsetWidth) + 20;
+            const boxWidth = (document.querySelector('.moreArea .titleBox .box').offsetWidth) + 20;
             
             const boxCount = Math.floor(decoBoxWidth / boxWidth);
             
@@ -627,19 +627,19 @@
         // window.addEventListener('resize', createBoxes);
 
         // GSAP 動畫
-        gsap.set('.titleBox .box', {
+        gsap.set('.moreArea .titleBox .box', {
             opacity: 0,
             scale: 0.7,
         });
 
-        gsap.set('.titleBox .title', {
+        gsap.set('.moreArea .titleBox .title', {
             opacity: 0,
             x: -30
         });
 
-        gsap.to('.titleBox .box', {
+        gsap.to('.moreArea .titleBox .box', {
             scrollTrigger: {
-                trigger: '.titleBox',
+                trigger: '.moreArea .titleBox',
                 start: 'top 80%',
                 once: true
             },
@@ -649,7 +649,7 @@
             stagger: 0.2,
             ease: 'power2.out',
             onComplete: () => {
-                gsap.to('.titleBox .title', {
+                gsap.to('.moreArea .titleBox .title', {
                     opacity: 1,
                     x: 0,
                     duration: 0.8,
