@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&family=Padyakke+Expanded+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/slick.css">
+    <link rel="stylesheet" href="style.css">
+    <title>RESUME</title>
+</head>
+<body>
+    <div class="loadingArea">
+        <div class="loadingBox">
+            <div class="wordBox wordBox1">
+                <span class="print"></span>
+                <p class="word"></p>
+            </div>
+            <div class="wordBox wordBox2">
+                <span class="print"></span>
+                <p class="word"></p>
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            let loadingSession = sessionStorage.getItem('loading');
+
+            const texts = ['MEI YI WANG', 'PORTFOLIO'];
+
+            function typeWriter(element, text, speed = 100, callback) {
+                let $word = $(element);
+                $word.text('');
+                $(element).siblings('.print').fadeIn(300);
+                let delay = 800;
+                for(let i = 0; i < text.length; i++) {
+                    setTimeout(() => {
+                        $word.text($word.text() + text.charAt(i));
+                        
+                        // 最後一個字時執行 callback
+                        if(i === text.length - 1 && callback) {
+                            setTimeout(() => {
+                                $(element).siblings('.print').fadeOut(300);
+                                callback();
+                            }, speed);
+                        }
+                    }, delay + (i * speed));
+                }
+            }
+
+            function showLoading(){
+                typeWriter('.wordBox1 .word', texts[0], 100, function() {
+
+                    typeWriter('.wordBox2 .word', texts[1], 100, function() {});
+                });
+            }
+
+            function hideLoading(){
+                $('.loadingArea').addClass('hide');
+                setTimeout(() => {
+                    $('.loadingArea').remove();
+                }, 900);
+            }
+            function removeLoading(){
+                $('.loadingArea').remove();
+                $('.bannerArea').addClass('show');
+            }
+
+            if(loadingSession === '1') {
+                removeLoading()
+                return;
+            }
+
+            sessionStorage.setItem('loading','1');
+            setTimeout(showLoading, 500);
+            setTimeout(hideLoading, 5500);
+            setTimeout(removeLoading, 6500);
+        });
+    </script>
+    <header>
+        <div class="menuBtn">
+            <div class="line"></div>
+        </div>
+    </header>
+    <div class="menuArea">
+        <div class="menuWrap">
+            <ul class="menu">
+                <li>
+                    <a class="menuLink" href="#bannerArea">
+                        <span class="en">HOME</span>
+                        <span class="tw">首頁</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menuLink" href="#aboutArea">
+                        <span class="en">ABOUT</span>
+                        <span class="tw">關於我</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menuLink" href="#projectArea">
+                        <span class="en">PROJECT</span>
+                        <span class="tw">專案介紹</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menuLink" href="#moreArea">
+                        <span class="en">PORTFOLIO</span>
+                        <span class="tw">其他作品</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menuLink" href="#contactArea">
+                        <span class="en">CONTACT</span>
+                        <span class="tw">聯絡我</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="outerWrap">
+        <section class="bannerArea" id="bannerArea">
+            <div class="wrap">
+                <div class="decoTitleBox">
+                    <p class="decoTitle"><span>PORTFOLIO</span></p>
+                    <p class="decoTitle"><span>RESUME</span></p>
+                </div>
+
+                <div class="bottom">
+                    <div class="txt">
+                        <p>履歷與作品集</p>
+                        <p>王媚儀 MEI YI WANG</p>
+                    </div>
+                    <div class="img">
+                        <img src="/images/headshot.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="scrollDown">
+                SCROLL
+                <div class="line"></div>
+            </div>
+            
+            <svg class="decoCircle top" width="1004" height="1004" viewBox="0 0 1004 1004" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="500" cy="500" r="500" stroke="#A1C2BD"/>
+            </svg> 
+            <svg class="decoCircle bottom" width="1004" height="1004" viewBox="0 0 1004 1004" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="500" cy="500" r="500" stroke="#A1C2BD"/>
+            </svg>
+            <svg class="decoLeft" xmlns="http://www.w3.org/2000/svg" width="243" height="442" viewBox="0 0 243 442" fill="none">
+                <rect x="14.5872" y="0.706667" width="311.189" height="311.189" transform="rotate(42.9793 14.5872 0.706667)" stroke="#A1C2BD"/>
+                <rect x="-21.1452" y="0.706667" width="311.189" height="311.189" transform="rotate(42.9793 -21.1452 0.706667)" stroke="#A1C2BD"/>
+                <rect x="-29.1756" y="36.6728" width="252.17" height="252.17" transform="rotate(42.9793 -29.1756 36.6728)" fill="#E7F2EF"/>
+            </svg>
+            
+        </section>
+
+        <section class="aboutArea" id="aboutArea">
+            <div class="wrap">
+                <div class="titleBox">
+                    <div class="decoTitle">
+                        <span class="splitWord">A</span>
+                        <span class="splitWord">B</span>
+                        <span class="splitWord">O</span>
+                        <span class="splitWord">U</span>
+                        <span class="splitWord">T</span>
+                    </div>
+                    <div class="title"><span>關於我</span></div>
+                </div>
+
+                <div class="eduBox">
+                    <div>
+                        <div class="top">
+                            <div class="titleEn">EDUCATION</div>
+                            <div class="text">
+                                <p>文藻外語大學</p>
+                                <p>數位內容應用與管理系</p>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <div>學歷</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expBox">
+                    <div class="title"><span>工作經驗</span></div>
+
+                    <div class="content">
+                        <div class="expItem">
+                            <div class="circle">1</div>
+                            <div class="txt">
+                                <p class="deco">EXPERIENCE</p>
+                                <p class="text">麻古茶坊</p>
+                                <p class="text">工讀生</p>
+                                <p class="date">2019 APR. ~ 2020 MAR.</p>
+                            </div>
+                        </div>
+                        <div class="expItem">
+                            <div class="circle">2</div>
+                            <div class="txt">
+                                <p class="deco">EXPERIENCE</p>
+                                <p class="text">愛貝斯網路有限公司</p>
+                                <p class="text">前端工程師</p>
+                                <p class="date">2024 JUL. ~ 2025 JUL.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="introArea">
+            <div class="wrap">
+                <div class="left">
+                    <div class="lineBg">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="pattenBox">
+                        <div class="patten pattenI pattenI1"></div>
+                        <div class="patten pattenI pattenI2"></div>
+                        <div class="patten pattenN"></div>
+                        <div class="patten pattenT"></div>
+                        <div class="patten pattenR1"></div>
+                        <div class="patten pattenR2"></div>
+                        <div class="patten pattenO"></div>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="title"><span>自我介紹</span></div>
+                    <p class="content">
+                        我是王媚儀，學生期間曾在飲料店工作並擔任畢籌會常務組組長，畢業後進入愛貝斯擔任前端工程師。在一年的工作中參與製作了17個網站專案，接觸各種產業後發現每個客戶對網站都有不同的需求與挑戰。透過與客戶、企劃、設計師的溝通協調來滿足各方需求的過程，讓我漸漸對專案管理產生興趣，也發現自己相較於寫程式，更喜歡需要規劃與溝通的專案管理工作。
+                        <br>
+                        <br>
+                        在專案執行過程中，我展現了快速學習與負責任的態度，也培養出細心的工作習慣。當遇到技術問題時，我能用簡單易懂的方式向企劃說明技術困難點，有效溝通解決問題。加上服務業累積的溝通技巧，讓我在面對客戶時能靈活應對各種狀況。
+                        <br>
+                        <br>
+                        平時我熱愛參觀各種展覽，從中觀察細節與學習創作靈感，也經常瀏覽 WebDesignClip 等設計網站，關注最新的網頁設計趨勢與創意表現手法，並且因自己喜歡製作動畫效果，所以也喜歡觀察其他網站的動畫效果。 
+                    </p>
+                </div>
+            </div>
+            <div class="decoTitle">INTRODUCTION</div>
+        </section>
+
+        <section class="projectArea" id="projectArea">
+            <div class="decoTitle">
+                <span>WEB</span>
+                <span>PROJECT</span>
+            </div>
+            
+            <div class="projectBox">
+                <div class="projectItem projectItem1">
+                    <div class="right">
+                        <div class="img">
+                            <img src="images/img_amica.jpg" alt="">
+                        </div>
+                        <div class="titleBox">
+                            <div class="date">2024 SEP.</div>
+                            <div class="title">AMICA</div>
+                        </div>
+                    </div>
+                    <div class="txt">
+                        <p class="intro">
+                            此專案為家電品牌，網站首頁需要多個區塊展示不同產品資料，面臨複雜的資料抓取與整合挑戰。同時，客戶要求在 Banner 區塊嵌入品牌影片，這些技術需求對當時的我來說是相當大的挑戰。
+                        </p>
+                        <div class="introItem">
+                            <div class="title">後台架構優化</div>
+                            <div class="text">
+                                客戶產品有兩個系列，各自包含不同類型家電。為避免重複上稿，我將欄位與單元整合設計。但經過多個專案經驗累積後，發現針對此類產品展示區塊獨立設計後台單元，反而能降低複雜度，因為產品類別變動性低，且不是所有類別都需在此區塊顯示，大幅提升客戶操作便利性與程式維護效率。
+                            </div>
+                        </div>
+                        <div class="introItem">
+                            <div class="title">技術問題解決</div>
+                            <div class="text">
+                                影片採用 YouTube 套件時遇到 RWD 適應以及載入問題，無法隨意調整尺寸，且客戶不希望出現黑色留白。經過多次測試與調整，優化了影片載入機制，並成功讓影片能完整填滿螢幕，解決響應式設計的適應問題。
+                            </div>
+                        </div>
+                        <div class="introItem">
+                            <div>
+                                <div class="title">UX 優化提案</div>
+                                <div class="text">
+                                    「關於我們」區塊的長圖在手機版占滿整個螢幕，但設計稿未設計切換箭頭。我主動向企劃提議在文字區塊加入箭頭指示，讓使用者清楚知道這是可切換的輪播功能，提升使用體驗。
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btnBox">
+                            <a class="btn" href="https://www.amica-tw.com/" target="_blank">
+                                <span>VISIT WEBSITE</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projectItem projectItem2">
+                    <div class="right">
+                        <div class="img">
+                            <img src="images/img_shine.jpg" alt="">
+                        </div>
+                        <div class="titleBox">
+                            <div class="date">2024 OCT.</div>
+                            <div class="title">日健建設</div>
+                        </div>
+                    </div>
+                    <div class="txt">
+                        <p class="intro">
+                            此專案設計感十足，包含大量視覺裝飾元素，對前端技術實現具有高度挑戰性。
+                        </p>
+                        <div class="introItem">
+                            <div class="title">客戶需求溝通</div>
+                            <div class="text">
+                                客戶對 loading 動畫效果要求極為嚴格，經過多次來回討論與修改，最終完成符合客戶期望的動畫表現。
+                            </div>
+                        </div>
+                        <div class="introItem">
+                            <div class="title">使用者體驗優化</div>
+                            <div class="text">
+                                設計稿中有大量裝飾性線條和房屋元素，初期計劃全部製作成 SVG 畫線動畫，但在製作過程中發現會干擾使用者的閱讀順序及增加網站載入效能。經評估後主動調整策略，僅保留適當的動畫效果，平衡視覺豐富度與使用者體驗。
+                            </div>
+                        </div>
+                        <div class="introItem">
+                            <div class="title">技術難點突破</div>
+                            <div class="text">
+                                工程案例區塊採用圓形輪播切換設計，這是當時技術上的一大挑戰。我投入大量時間研究相關 CSS 技術，反覆測試與改寫程式碼，最終實現流暢的圓形輪播效果，並確保程式碼結構清晰易於後續維護。
+                            </div>
+                        </div>
+                        <div class="btnBox">
+                            <a class="btn" href="https://www.shinegroup.com.tw/" target="_blank">
+                                <span>VISIT WEBSITE</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="moreArea" id="moreArea">
+            <div class="titleBox">
+                <div class="decoBox">
+                    <div class="box"></div>
+                </div>
+                <div class="title">MORE</div>
+            </div>
+
+            <div class="wrap">
+                <div class="moreBox">
+                    <div class="moreList">
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_yongJia.jpg">
+                                    <a class="linkWrap" href="https://www.yong-jia.tw/" target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2024 SEP.</div>
+                                    <div class="title">永佳塗裝 </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_pengyao.jpg">
+                                    <a class="linkWrap" href="https://www.peng-yao.com/" target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2024 NOV.</div>
+                                    <div class="title">鵬耀法律 </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_tongYuan.jpg">
+                                    <a class="linkWrap" href="https://www.tong-yuan.com.tw/" target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2024 NOV.</div>
+                                    <div class="title">東源營造 </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_value.jpg">
+                                    <a class="linkWrap" href="https://www.valuevalves.com/" target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2024 DEC.</div>
+                                    <div class="title">捷流閥業</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_wheneverHair.jpg">
+                                    <a class="linkWrap" href="https://www.wheneverhair.com.tw/" target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2024 DEC.</div>
+                                    <div class="title">每當美髮</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_sunjet.jpg">
+                                    <a class="linkWrap" href="https://www.sunjettech.com/" target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2025 JAN.</div>
+                                    <div class="title">商杰公司</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_draGoon.jpg">
+                                    <a class="linkWrap" href="https://www.dra-goon.com.tw/"  target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2025 FEB.</div>
+                                    <div class="title">丞曜通達</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="moreItem">
+                            <div class="item">
+                                <div class="img">
+                                    <img src="images/img_lialia.jpg">
+                                    <a class="linkWrap" href="https://www.lailaiups.com.tw/"  target="_blank"></a>
+                                </div>
+                                <div class="txt">
+                                    <div class="date">2025 APR.</div>
+                                    <div class="title">徠徠企業</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scrollBar">
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="contactArea" id="contactArea">
+            <div class="left">
+                <div class="name">MEI YI WANG</div>
+                <div class="img">
+                    <img src="images/headshot.jpg">
+                </div>
+            </div>
+            <div class="right">
+                <div class="content">
+                    <div class="text"><span>THANK YOU</span></div>
+                    <div class="contactBtn">
+                        <a class="btn" href="mailto:mayee0409@gmail.com">
+                            <span>CONTACT ME</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="footer">
+        <p>DESIGNED & BUILT BY MEI YI WANG &COPY; 2025 ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</body>
+<script src="vendor/slick.min.js"></script>
+<script src="vendor/gsap.js"></script>
+<script src="vendor/ScrollTrigger.js"></script>
+<script src="vendor/ScrollToPlugin.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.moreList').slick({
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: true,
+            dots: false,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            variableWidth: true,
+            responsive: [
+                {
+                    breakpoint: 841,
+                    settings: {
+                        slidesToShow: 1,
+                        variableWidth: false,
+                    }
+                }
+            ]
+        }).on('afterChange', function(event, slick, currentSlide) {  // 用 .on()
+            const movePercent = currentSlide * 12.5;
+            $('.scrollBar .line').css('left', `${movePercent}%`);
+        });
+
+        // menuLink
+        $('.menuBtn').click(function(){
+            $(this).toggleClass('close');
+            $(".menuArea").toggleClass('show');
+        });
+        $('.menuLink').on('click', function(e) {
+            e.preventDefault();
+            
+            const $target = $($(this).attr('href'));
+            
+            if ($target.length) {
+                $('html, body').animate({
+                    scrollTop: $target.offset().top
+                }, 1200);
+                
+                $('.menuArea').removeClass('show');
+                $('.menuBtn').removeClass('close');
+            }
+        });
+
+        // GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // projectItem
+        function createProjectAnimation(itemClass) {
+            gsap.set(`${itemClass} .txt`, {
+                y: "150%",
+                // opacity: 0
+            });
+            
+            let txtContentHeight = document.querySelector(`${itemClass} .txt`).offsetHeight; 
+            let scrollDuration = Math.max(txtContentHeight * 1.5, window.innerHeight * 1.5); 
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: itemClass, 
+                    start: "top top", 
+                    end: `+=${scrollDuration}`, 
+                    scrub: true,
+                    pin: itemClass, 
+                    markers: false, 
+                }
+            });
+
+            tl.to(`${itemClass} .img`, {
+                width: "100%", 
+                x: 0, 
+                y: "40%",
+                duration: 0.3, 
+                ease: "none"
+            }, 0)
+            
+            .to(`${itemClass} .titleBox`, {
+                y: "100%",
+                opacity: 1,
+                duration: 0.2,
+                ease: "none"
+            }, 0.25)
+            
+            .to(`${itemClass} .txt`, {
+                y: "-10%",
+                // opacity: 1,
+                duration: 0.3, 
+                ease: "none"
+            }, 0.5); 
+        }
+
+        if (window.innerWidth > 1180) {
+            createProjectAnimation(".projectItem1");
+            createProjectAnimation(".projectItem2");
+        }
+
+        // scrollDown
+        $('.scrollDown').on('click', function() {
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: {
+                    y: ".aboutArea",
+                    autoKill: false
+                },
+                ease: "power2.inOut"
+            });
+        });
+
+        // moreArea 動態生成 box
+        function createBoxes() {
+            const decoBox = document.querySelector('.titleBox .decoBox');
+            const decoBoxWidth = decoBox.offsetWidth;
+            const boxWidth = (document.querySelector('.titleBox .box').offsetWidth) + 20;
+            
+            const boxCount = Math.floor(decoBoxWidth / boxWidth);
+            
+            decoBox.innerHTML = '';
+
+            for (let i = 0; i < (boxCount - 1); i++) {
+                const box = document.createElement('div');
+                box.className = 'box';
+                decoBox.appendChild(box);
+            }
+        }
+
+        createBoxes();
+
+        // RWD 時重新計算
+        // window.addEventListener('resize', createBoxes);
+
+        // GSAP 動畫
+        gsap.set('.titleBox .box', {
+            opacity: 0,
+            scale: 0.7,
+        });
+
+        gsap.set('.titleBox .title', {
+            opacity: 0,
+            x: -30
+        });
+
+        gsap.to('.titleBox .box', {
+            scrollTrigger: {
+                trigger: '.titleBox',
+                start: 'top 80%',
+                once: true
+            },
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.2,
+            ease: 'power2.out',
+            onComplete: () => {
+                gsap.to('.titleBox .title', {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    onComplete: () => {
+                            document.querySelector('.moreBox').classList.add('show');
+                        }
+                });
+            }
+        });
+
+        // 淡入動畫
+        gsap.to('.aboutArea .titleBox', {
+            scrollTrigger: {
+                trigger: '.aboutArea .titleBox',
+                start: 'top 50%',
+                onEnter: () => document.querySelector('.aboutArea .titleBox').classList.add('show'),
+                once: true,
+            }
+        });
+
+        gsap.to('.aboutArea .eduBox', {
+            scrollTrigger: {
+                trigger: '.aboutArea .eduBox',
+                start: 'top 60%',
+                onEnter: () => document.querySelector('.aboutArea .eduBox').classList.add('show'),
+                once: true,
+            }
+        });
+        gsap.to('.aboutArea .expBox', {
+            scrollTrigger: {
+                trigger: '.aboutArea .expBox',
+                start: 'top 60%',
+                onEnter: () => document.querySelector('.aboutArea .expBox').classList.add('show'),
+                once: true,
+            }
+        });
+        gsap.to('.introArea', {
+            scrollTrigger: {
+                trigger: '.introArea',
+                start: 'top 15%',
+                onEnter: () => document.querySelector('.introArea').classList.add('show'),
+                once: true,
+            }
+        });
+        gsap.to('.projectArea .decoTitle', {
+            scrollTrigger: {
+                trigger: '.projectArea .decoTitle',
+                start: 'top 60%',
+                onEnter: () => document.querySelector('.projectArea .decoTitle').classList.add('show'),
+                once: true,
+            }
+        });
+        gsap.to('.contactArea', {
+            scrollTrigger: {
+                trigger: '.contactArea',
+                start: 'top 60%',
+                onEnter: () => document.querySelector('.contactArea').classList.add('show'),
+                once: true,
+            }
+        });
+
+    });
+</script>
+</html>

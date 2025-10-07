@@ -1,0 +1,1770 @@
+@use 'anime';
+// Color
+$mainColor:#708993;
+$secondColor: #A1C2BD;
+$lightColor: #E7F2EF;
+$darkColor: #19183B;
+
+// fontFamily
+$mainFont:"Noto Serif TC", "PMingLiU",serif;
+$enFont:"Padyakke Expanded One", serif;
+
+@mixin fontSetting($family:$mainFont, $size:20, $color:$mainColor,$spacing:16) {
+    font-family: $family;
+    font-size: #{$size}px;
+    color: $color;
+    letter-spacing: #{$size * ($spacing / 100)}px;
+    font-weight: 300;
+}
+
+@mixin fontSettingEn($family :$enFont, $size:20, $color:$mainColor,$spacing:20) {
+    font-family: $family;
+    font-size: #{$size}px;
+    color: $color;
+    letter-spacing: #{$size * ($spacing / 100)}px;
+}
+
+@mixin flex($direction :row, $justify : center, $align : center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin media($breakpoint) {
+    @media (max-width: #{$breakpoint}px) {
+        @content;
+    }
+}
+
+// Global
+
+*{
+    position: relative;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+html,body{
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+.outerWrap{
+    max-width: 1920px;
+    overflow: hidden;
+}
+
+.wrap{
+    max-width: 1500px;
+    padding: 0 50px;
+    margin: 0 auto;
+    @include media(1180) {
+        padding: 0 32px;
+    }
+    @include media(480) {
+        padding: 0 24px;
+    }
+}
+
+/* header */
+header{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    padding: 40px;
+    @include media(1180) {
+        padding: 20px;
+    }
+    .menuBtn{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid $lightColor;
+        background-color: $mainColor;
+        cursor: pointer;
+        &.close{
+            .line{
+                opacity: 0;
+            }
+            &::before {
+                top: 50%;
+                transform:translateX(-50%) rotate(45deg);
+            }
+            &::after {
+                bottom: calc(50% - 1px);
+                transform:translateX(-50%) rotate(-45deg);
+            }
+        }
+        .line{
+            width: 25px;
+            height: 1px;
+            background-color: $lightColor;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.5s;
+        }
+        &::before,&::after {
+            content: "";
+            width: 25px;
+            height: 1px;
+            background-color: $lightColor;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: center center;
+            transition: all 0.5s;
+        }
+        &::before {
+            top: 12px;
+        }
+        &::after {
+            bottom: 12px;
+        }
+    }
+}
+
+/* menuArea */
+.menuArea{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 90;
+    transform: translateX(100%);
+    padding: 20px;
+    transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
+    @include media(1180) {
+        padding: 10px;
+    }
+    &.show{
+        transform: translateX(0);
+    }
+    .menuWrap{
+        background-color: #fff;
+        border: 2px solid $mainColor;
+        border-radius: 32px;
+        height: calc(100dvh - 40px);
+        @include media(1180) {
+            height: auto;
+        }
+    }
+    .menu{
+        padding: 80px 20px 60px 30px;
+        margin-right: 10px;
+        height: 100%;
+        @include flex($direction:column,$align:flex-start);
+        overflow-y: auto;
+        @include media(840) {
+            padding: 60px 10px 40px 20px;
+        }
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-button {
+            height: 15px;
+            background: transparent;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: #fff;
+            border-radius: 10px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: $mainColor;
+            border-radius: 10px;
+        }
+        li{
+            list-style: none;
+            &:not(:last-child){
+                margin-bottom: 40px;
+            }
+        }
+        .menuLink{
+            display: inline-block;
+            transition: all 0.5s;
+            &:hover{
+                transform: translateX(15px);
+            }
+            .en{
+                display: block;
+                @include fontSettingEn($size:36,$spacing:8);
+                line-height: 1;
+                @include media(1400) {
+                    font-size: 32px;
+                }
+                @include media(1180) {
+                    font-size: 24px;
+                }
+                @include media(480) {
+                    font-size: 20px;
+                }
+            }
+            .tw{
+                display: block;
+                @include fontSetting($size:24);
+                line-height: 1;
+                @include media(1400) {
+                    font-size: 20px;
+                }
+                @include media(1180) {
+                    font-size: 16px;
+                }
+                @include media(480) {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+/* loadingArea */
+.loadingArea{
+    width: 100dvw;
+    height: 100dvh;
+    background-color: #FFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: opacity 0.8s;
+    &.hide{
+        opacity: 0;
+    }
+
+    .loadingBox{
+        @include flex($direction:column);
+        max-width: 1500px;
+        margin: 0 auto;
+        height: 100%;
+        @include fontSettingEn($size:100,$spacing:12);
+        line-height: 1.2;
+        @include media(1400) {
+            font-size: 72px;
+            letter-spacing: 8.6px;
+        }
+        @include media(1180) {
+            font-size: 64px;
+            letter-spacing: 7.6px;
+        }
+        @include media(840) {
+            font-size: 48px;
+            letter-spacing: 5.8px;
+        }
+        @include media(640) {
+            font-size: 40px;
+            letter-spacing: 4.8px;
+        }
+        @include media(480) {
+            font-size: 32px;
+            letter-spacing: 3.8px;
+        }
+    }
+    .print{
+        width: 3px;
+        height: 70%;
+        background-color: $mainColor;
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-65%);
+        animation: 0.5s printing infinite linear;
+    }
+    .preWord{
+        opacity: 0;
+        display: inline-block;
+    }
+    .word{
+        display: inline-block;
+    }
+}
+
+/* bannerArea */
+.bannerArea{
+    padding-top: 80px;
+    min-height: 100dvh;
+
+    &.show{
+        .decoTitle{
+            span{
+                transform: translateY(0%);
+            }
+        }
+        .bottom{
+            .txt{
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .img{
+                clip-path: inset(0 0 0 0);
+                img{
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+    @include media(840) {
+        padding-top: 50px;
+    }
+    .decoTitle{
+        @include fontSettingEn($size:140,$color:$mainColor,$spacing:12);
+        line-height: 1;
+        overflow: hidden;
+        &:nth-child(2){
+            span{
+                transition-delay: 0.3s;
+            }
+        }
+        @include media(1700){
+            font-size: 120px;
+            letter-spacing: 14.4px;
+        }
+        @include media(1400) {
+            font-size: 100px;
+            letter-spacing: 12px;
+        }
+        @include media(1180) {
+            font-size: 84px;
+            letter-spacing: 10px;
+            z-index: 2;
+        }
+        @include media(840) {
+            font-size: 64px;
+        }
+        @include media(640) {
+            font-size: 48px;
+            letter-spacing: 4.8px;
+        }
+        @include media(450) {
+            font-size: 40px;
+        }
+
+        span{
+            display:inline-block;
+            transform: translateY(100%);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
+        }
+
+    }
+
+    .bottom{
+        @include flex($justify:space-between,$align:flex-start);
+        padding-top: 50px;
+        @include media(540) {
+            flex-direction: column;
+        }
+        .txt{
+            @include fontSetting($size: 40,$color:$darkColor);
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.8s 1s cubic-bezier(0.5, 0, 0.35, 1);
+            @include media(1700) {
+                font-size: 36px;
+            }
+            @include media(1180) {
+                font-size: 32px;
+                letter-spacing: 6.4px;
+            }
+            @include media(840) {
+                font-size: 24px;
+                letter-spacing: 4.8px;
+                flex-shrink: 0;
+            }
+            @include media(640) {
+                font-size: 20px;
+                letter-spacing: 4px;
+                margin-right: -20px;
+                z-index: 2;
+            }
+            @include media(540) {
+                padding: 10px 16px;
+                background-color:$mainColor;
+                color: #FFF;
+            }
+        }
+
+        .img{
+            width: 400px;
+            margin-top: -150px;
+            clip-path: inset(0 100% 0 0);
+            transition: all 0.8s 1.5s cubic-bezier(0.5, 0, 0.35, 1);
+            @include media(1700) {
+                width: 320px;
+                margin-top: -150px;
+            }
+            @include media(1180) {
+                width: 280px;
+                margin-top: -100px;
+            }
+            @include media(840) {
+                margin-right: -32px;
+                width: auto;
+                flex: 1;
+                max-width: 320px;
+            }
+            @include media(540) {
+                margin:-20px 0 0 auto;
+                width: 280px;
+            }
+            img{
+                display: block;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                transform: scale(1.3);
+                transition: all 0.8s 2s ease;
+            }
+        }
+    }
+    .scrollDown{
+        cursor: pointer;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        @include fontSettingEn($size:36,$spacing:8);
+        @include flex($direction:column);
+        @include media(840) {
+            font-size: 32px;
+        }
+        @include media(480) {
+            font-size: 24px;
+        }
+        .line{
+            height: 100px;
+            &::after {
+                content: "";
+                display: block;
+                width: 1px;
+                height: 100px;
+                background-color: $mainColor;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                animation: scrollDown infinite 4s linear;
+            }
+            @include media(840) {
+                height: 80px;
+            }
+        }
+    }
+    .decoLeft{
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        z-index: -1;
+        pointer-events: none;
+        @include media(1700) {
+            width: 200px;
+            bottom: 0px;
+        }
+        @include media(640) {
+            width: 160px;
+            height: 300px;
+            bottom: 80px;
+        }
+    }
+    .decoCircle{
+        position: absolute;
+        z-index: -1;
+        width: 55%;
+        pointer-events: none;
+        &.top{
+            top: -40%;
+            right: -10%;
+            @include media(1400) {
+                width: 600px;
+            }
+            @include media(480) {
+                width: 125%;
+                top: -50%;
+            }
+        }
+        &.bottom{
+            top: 12%;
+            right: -8%;
+            @include media(1180) {
+                width: 480px;
+                top: 8%;
+                right: -10%;
+            }
+            @include media(480) {
+                width: 500px;
+                right: -50%;
+            }
+        }
+    }
+}
+
+/* aboutArea */
+.aboutArea{
+    padding: 150px 0;
+    @include media(1180) {
+        padding: 100px 0;
+    }
+    .titleBox{
+        margin-bottom: 80px;
+
+        &.show{
+            .decoTitle{
+                .splitWord{
+                    transform: translateY(0) scaleY(1);
+
+                    @for $i from 1 through 5{
+                        &:nth-child(#{$i}){
+                            transition-delay: 0.1s * $i;
+                        }
+                    }
+                }
+            }
+            .title{
+                span{
+                    transform: translateY(0%);
+                }
+            }
+        }
+        .decoTitle{
+            @include fontSettingEn($size:250);
+            letter-spacing: 0px;
+            line-height: 1;
+            @include flex($justify:space-between);
+            margin: 0 -20px;
+            overflow: hidden;
+            padding-top: 20px;
+            @include media(1500) {
+                font-size: 200px;
+                margin: 0;
+            }
+            @include media(1180) {
+                font-size: 160px;
+            }
+            @include media(840) {
+                font-size: 120px;
+            }
+            @include media(640) {
+                font-size: 100px;
+            }
+            @include media(540) {
+                font-size: 84px;
+            }
+            @include media(480) {
+                font-size: 72px;
+            }
+            @include media(400) {
+                font-size: 64px;
+            }
+
+            .splitWord{
+                display: inline-block;
+                transform: translateY(100%) scaleY(0.7);
+                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+            }
+        }
+        .title{
+            @include fontSetting($size:48);
+            text-align: center;
+            margin-top: -60px;
+            overflow: hidden;
+            @include media(1180) {
+                font-size: 40px;
+                margin-top: -40px;
+            }
+            @include media(840) {
+                font-size: 36px;
+                margin-top: -32px;
+            }
+            @include media(640) {
+                font-size: 32px;
+                margin-top: -24px;
+            }
+            @include media(480) {
+                font-size: 24px;
+                margin-top: -15px;
+            }
+            span{
+                display: inline-block;
+                transform: translateY(100%);
+                transition: all 0.8s 0.6s cubic-bezier(0.5, 0, 0.35, 1);
+            }
+        }
+    }
+
+    .eduBox{
+        @include flex($align:flex-start);
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(10px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
+
+        &.show{
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+        .top{
+            @include flex($align:flex-start,$justify:space-between);
+            @include media(720) {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .titleEn{
+            @include fontSettingEn($size:60,$color:$secondColor);
+            line-height: 1;
+            margin-right: 40px;
+            @include media(1180) {
+                font-size: 48px;
+                letter-spacing: 9.6px;
+            }
+            @include media(840) {
+                font-size: 36px;
+                letter-spacing: 6px;
+                margin-right: 24px;
+            }
+            @include media(720) {
+                font-size: 40px;
+                margin-right: 0;
+            }
+        }
+        .text{
+            @include fontSetting($size:24,$color:$darkColor);
+            line-height: 1.8;
+            @include media(1180) {
+                font-size: 20px;
+            }
+            @include media(720) {
+                text-align: center;
+            }
+        }
+        .bottom{
+            @include fontSetting($size:36,$color:$secondColor);
+            @include flex($justify:space-between);
+            @include media(1180) {
+                font-size: 32px;
+                @include media(840) {
+                    font-size: 28px;
+                }
+            }
+            @include media(720) {
+                display: none;
+            }
+            &::after{
+                content: "";
+                display: block;
+                height: 1px;
+                flex: 1;
+                margin-left: 40px;
+                background-color: $secondColor;
+            }
+        }
+    }
+
+    .expBox{
+        margin-top: 100px;
+
+        &.show{
+            .title{
+                span{
+                    transform: translateY(0);
+                }
+                &::after {
+                    clip-path: inset(0 0 0 0);
+                }
+            }
+            .expItem{
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+        .title{
+            @include fontSetting($size: 36,$color:$secondColor);
+            text-align: center;
+            padding-bottom: 5px;
+            margin-bottom: 50px;
+            overflow: hidden;
+            @include media(840) {
+                font-size: 32px;
+                letter-spacing: 7.2px;
+            }
+            @include media(840) {
+                font-size: 24px;
+                letter-spacing: 4.8px;
+            }
+            span{
+                display: inline-block;
+                transform: translateY(100%);
+                transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
+            }
+            &::after {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 1px;
+                background-color: $secondColor;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                clip-path: inset(0 50% 0 50%);
+                transition: all 0.8s 0.3s cubic-bezier(0.5, 0, 0.35, 1);
+            }
+        }
+        .content{
+            @include flex($justify:space-around);
+            @include media(1400) {
+                justify-content: space-between;
+            }
+            @include media(1040) {
+                flex-wrap: wrap;
+            }
+        }
+        .expItem{
+            width: 480px;
+            padding: 65px 0 0 65px;
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(10px);
+            transition: all 0.8s 0.6s cubic-bezier(0.5, 0, 0.35, 1);
+            @include media(1180) {
+                padding: 48px 0 0 48px;
+                width: 400px;
+            }
+            @include media(1040) {
+                width: 100%;
+                &:not(:last-child){
+                    margin-bottom: 50px;
+                }
+            }
+        }
+        .circle{
+            width: 125px;
+            height: 125px;
+            border: 1px solid $secondColor;
+            border-radius: 50%;
+            padding: 20px 0 0 25px;
+            @include fontSettingEn($size:64);
+            line-height: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            @include media(1180) {
+                width: 100px;
+                height: 100px;
+                font-size: 48px;
+                padding: 15px 0 0 20px;
+            }
+        }
+        .txt{
+            border: 1px solid $mainColor;
+            border-radius: 20px;
+            padding: 20px 25px;
+            @include media(1180) {
+                padding: 15px 20px;
+            }
+
+            .deco{
+                @include fontSettingEn($size:20);
+                background-color: #FFF;
+                margin-bottom: 10px;
+            }
+            .text{
+                @include fontSetting($size:24,$color:$darkColor);
+                padding-left: 25px;
+                @include media(1180) {
+                    font-size: 20px;
+                    padding-left: 20px;
+                }
+                @include media(480) {
+                    font-size: 16px;
+                }
+            }
+            .date{
+                @include fontSettingEn($size:16,$spacing:12,$color:$secondColor);
+                text-align: right;
+                margin-top: 20px;
+                line-height: 1;
+                @include media(1180) {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+/* introArea */
+.introArea{
+    margin-bottom: 50px;
+
+    &.show{
+        .right{
+            .title{
+                span{
+                    transform: translateY(0);
+                }
+            }
+            .content{
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+
+            }
+        }
+        .lineBg{
+            clip-path: inset(0 0 0 0);
+        }
+        .pattenBox{
+            .patten{
+                clip-path: inset(0 0 0 0);
+            }
+        }
+        .decoTitle{
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .wrap{
+        margin: 0;
+        max-width: calc(50% + 750px);
+        padding: 0 50px 0 0;
+        @include flex($align:stretch);
+        @include media(1180) {
+            flex-direction: column-reverse;
+            padding: 0 32px;
+        }
+
+        @include media(480) {
+            padding: 0 24px;
+        }
+    }
+    .left{
+        width: 700px;
+        flex-shrink: 0;
+        @include media(1600) {
+            width: 600px;
+        }
+        @include media(1400) {
+            width: 540px;
+        }
+        @include media(1180) {
+            width: 100%;
+            height: 20dvw;
+        }
+    }
+    .lineBg{
+        height: 100%;
+        @include flex($justify:space-between);
+        clip-path: inset( 0 0 100% 0);
+        transition: all 1.2s 0.6s cubic-bezier(0.5, 0, 0.35, 1);
+        .line{
+            width: 1px;
+            height: 100%;
+            background-color: $secondColor;
+        }
+    }
+    .pattenBox{
+        .patten{
+            clip-path: inset(0 100% 0 0);
+            transition: all 1.5s 1s cubic-bezier(0.76, 0, 0.1, 1);
+        }
+        position: static;
+        .pattenI{
+            width: 20%;
+            height: 5%;
+            border: 1px solid $secondColor;
+            background-color: #FFF;
+            position: absolute;
+            left: 1px;
+
+            &.pattenI1{
+                top: 0;
+            }
+            &.pattenI2{
+                top: calc(20% - 40px);
+            }
+            @include media(1180) {
+                height: 20%;
+                left: 0;
+                width: calc(20% + 1px);
+                &.pattenI2{
+                    top: auto;
+                    bottom: 0;
+                }
+            }
+        }
+        .pattenN{
+            width: 20%;
+            height: 20%;
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            overflow: hidden;
+            // background-color: $lightColor;
+            &::before {
+                content: "";
+                display: block;
+                width: 1px;
+                height: 150%;
+                background-color: $secondColor;
+                transform: rotate(317deg);
+                transform-origin: top center;
+            }
+            @include media(1180) {
+                height: 100%;
+                top: 0;
+                width: calc(100% + 1px);
+                &::before {
+                    transform: rotate(316.5deg);
+                }
+            }
+        }
+        .pattenT{
+            width: 20%;
+            height: 5%;
+            // border: 1px solid $secondColor;
+            background-color: $secondColor;
+            position: absolute;
+            left: 40%;
+            top: 40%;
+            @include media(1180) {
+                top: 0;
+                height: 20%;
+            }
+        }
+        .pattenR1{
+            width: 20%;
+            height: 10%;
+            background-color: #fff;
+            border: 1px solid $secondColor;
+            border-radius: 0 70px 70px 0;
+            position: absolute;
+            top: 60%;
+            left: 60%;
+            @include media(1180) {
+                top: 0;
+                height: 50%;
+                left: calc(60% - 1px);
+            }
+        }
+        .pattenR2{
+            width: 20%;
+            height: 10%;
+            position: absolute;
+            top: 70%;
+            left: 60%;
+            overflow: hidden;
+            &::before {
+                content: "";
+                display: block;
+                width: 150%;
+                height: 1px;
+                background-color: $secondColor;
+                transform: rotate(25deg);
+                transform-origin: center left;
+            }
+            @include media(1180) {
+                top: 50%;
+                height: 50%;
+                &::before{
+                    transform: rotate(27.5deg);
+                }
+            }
+        }
+        .pattenO{
+            width: 20%;
+            height: 20%;
+            border-radius: 50%;
+            background-color: $secondColor;
+            position: absolute;
+            left: 80%;
+            top: 80%;
+            @include media(1180) {
+                height: 100%;
+                top: 0;
+            }
+        }
+    }
+
+    .right{
+        padding: 40px 0 200px;
+        flex: 1;
+        @include media(1600) {
+            padding: 35px 0 150px;
+        }
+        @include media(1400) {
+            padding: 20px 0 100px;
+        }
+        @include media(840) {
+            padding: 0 0 80px;
+        }
+        .title{
+            padding-left: 40px;
+            @include fontSetting($size:48);
+            margin-bottom: 40px;
+            overflow: hidden;
+            @include media(1600) {
+                font-size: 40px;
+            }
+            @include media(1400) {
+                font-size: 36px;
+            }
+            @include media(1180) {
+                padding-left: 0;
+                margin-bottom: 0;
+                padding-bottom: 40px;
+
+                &::before {
+                    content: "INTRODUCTION";
+                    @include fontSettingEn($size:36,$spacing:12,$color:$secondColor);
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                }
+            }
+            @include media(840) {
+                font-size: 24px;
+                &::before {
+                    font-size: 24px;
+                    letter-spacing: 2.8px;
+                }
+            }
+            span{
+                display: inline-block;
+                transform: translateY(100%);
+                transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
+            }
+        }
+        .content{
+            padding-left:150px;
+            @include fontSetting($size:16,$color:$darkColor);
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(10px);
+            transition: all 0.8s 0.3s cubic-bezier(0.5, 0, 0.35, 1);
+
+            @include media(1600) {
+                padding-left: 100px;
+            }
+            @include media(1400) {
+                font-size: 14px;
+                padding-left: 80px;
+            }
+            @include media(1180) {
+                padding-left: 0;
+            }
+        }
+    }
+
+    .decoTitle{
+        @include fontSettingEn($size:72,$spacing:12,$color:$secondColor);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s 1.2s cubic-bezier(0.5, 0, 0.35, 1);
+        @include media(1700) {
+            font-size: 64px;
+            letter-spacing: 7.6px;
+        }
+        @include media(1600) {
+            font-size: 48px;
+            letter-spacing: 5.8px;
+        }
+        @include media(1400) {
+            font-size: 40px;
+            letter-spacing: 4.8px;
+        }
+        @include media(1180) {
+            display: none;
+        }
+    }
+}
+
+/* projectArea */
+.projectArea{
+    background-image: url(images/bg50.png);
+    background-color: rgb(112, 137, 147,0.9);
+    background-repeat: repeat;
+    padding: 100px 0;
+
+    @include media(1180) {
+        padding: 80px 0;
+    }
+    @include media(480) {
+        padding: 50px 0
+    }
+    .decoTitle{
+        @include fontSettingEn($size:120,$spacing:10,$color:#FFF);
+        line-height: 1;
+        text-align: center;
+        margin-bottom: 50px;
+        overflow: hidden;
+        &.show{
+            span{
+                transform: translateY(0) scaleY(1);
+            }
+        }
+        @include media(1600) {
+            font-size: 100px;
+            letter-spacing: 10px;
+        }
+        @include media(1180) {
+            font-size: 72px;
+            letter-spacing: 7.2px;
+        }
+        @include media(840) {
+            font-size: 64px;
+            letter-spacing: 6.4px;
+            margin-bottom: 30px;
+        }
+        @include media(720) {
+            font-size: 48px;
+            letter-spacing: 4.8px;
+            padding: 0 24px;
+        }
+        span{
+            display: inline-block;
+            transform: translateY(100%) scaleY(0.7);
+            transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+            &:nth-child(2){
+                transition-delay: 0.3s;
+            }
+        }
+    }
+
+    .projectBox{
+        width: calc(50% + 750px);
+        padding-right: 50px;
+
+        @include media(1600) {
+            width: 100%;
+        }
+        @include media(1180) {
+            padding: 0 32px;
+        }
+        @include media(480) {
+            padding: 0 24px;
+        }
+        .projectItem{
+            display: flex;
+            align-items: flex-start;
+            @include media(1180) {
+                flex-direction: column;
+
+                &:not(:last-child){
+                    margin-bottom: 80px;
+                }
+            }
+        }
+        .right{
+            width: 50%;
+            flex-shrink: 0;
+            @include media(1180) {
+                width: 100%;
+            }
+            .img{
+                width: 1500px;
+                transform: translateX(calc(50vw - 750px));
+                z-index: 2;
+                @include media(1600) {
+                    width: calc(100dvw - 100px);
+                    transform: translateX(50px);
+                }
+                @include media(1180) {
+                    width: 100%;
+                    transform: none;
+                }
+            }
+            img{
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+
+            .titleBox{
+                padding-left: 40px;
+                opacity: 0;
+                @include media(1180) {
+                    opacity: 1;
+                    padding-left: 0;
+                }
+            }
+            .date{
+                @include fontSettingEn($size:40,$color:$lightColor);
+                text-align: right;
+                line-height: 1;
+                margin-top: 20px;
+                @include media(1400) {
+                    font-size: 36px;
+                }
+                @include media(1180) {
+                    font-size: 32px;
+                }
+                @include media(840) {
+                    font-size: 24px;
+                }
+                @include media(480) {
+                    font-size: 20px;
+                }
+            }
+            .title{
+                @include fontSetting($size:72,$color:#FFF);
+                text-align: left;
+                line-height: 1.2;
+                @include media(1400) {
+                    font-size: 54px;
+                }
+                @include media(1180) {
+                    font-size: 48px;
+                }
+                @include media(840) {
+                    font-size: 40px;
+                }
+                @include media(640) {
+                    font-size: 36px;
+                }
+                @include media(480) {
+                    font-size: 32px;
+                }
+            }
+        }
+
+        .txt{
+            width: 50%;
+            padding: 40px 0 0 80px;
+            margin-left: auto;
+            @include media(1400) {
+                padding: 40px 0 40px 50px;
+            }
+            @include media(1180) {
+                width: 100%;
+                padding: 0;
+                margin: 40px 0 0;
+            }
+        }
+
+        .intro{
+            @include fontSetting($size:20,$color:#fff);
+            margin-bottom: 40px;
+            @include media(1400) {
+                font-size: 16px;
+            }
+        }
+        .introItem{
+            &:not(:last-child){
+                margin-bottom: 50px;
+                @include media(480) {
+                    margin-bottom: 30px;
+                }
+            }
+            .title{
+                @include fontSetting($size:20,$color:#FFF);
+                border-bottom: 1px solid $lightColor;
+                padding: 5px 0 5px 24px;
+                margin-bottom: 20px;
+                @include media(1400) {
+                    font-size: 16px;
+                }
+                &::before {
+                    content: "";
+                    width: 12px;
+                    height: 12px;
+                    background-color: $lightColor;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%) rotate(45deg);
+                }
+            }
+            .text{
+                @include fontSetting($size:16,$color:#FFF);
+                padding-left: 40px;
+                @include media(1400) {
+                    font-size: 14px;
+                }
+                @include media(480) {
+                    padding-left: 0;
+                }
+            }
+        }
+
+        .btnBox{
+            .btn{
+                display: inline-block;
+                background-color: #FFF;
+                @include fontSettingEn($size:20,$color:$mainColor);
+                padding: 10px 15px 5px;
+                transition: all 0.5s 0.1s;
+                &::before {
+                    content: "";
+                    display: block;
+                    width: 0;
+                    height: 100%;
+                    background-color: $secondColor;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    pointer-events: none;
+                    transition: all 0.5s;
+                }
+                &:hover{
+                    color: #fff;
+                    &::before {
+                        width: 100%;
+                        right: auto;
+                        left: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* moreArea */
+.moreArea{
+    padding: 100px 0;
+    background-color: $lightColor;
+    @include media(1180) {
+        padding: 80px 0;
+    }
+    @include media(480) {
+        padding: 50px 0;
+    }
+    .titleBox{
+        width: 75%;
+        padding-left: 20px;
+        @include flex($justify:flex-start,$align:stretch);
+        margin-bottom: 80px;
+        @include media(1400) {
+            margin-bottom: 50px;
+        }
+        @include media(840) {
+            width: 85%;
+        }
+        @include media(480) {
+            width: 100%;
+            padding: 0 24px 0 15px;
+        }
+        .decoBox{
+            @include flex($justify:flex-start);
+            flex: 1;
+            gap: 40px;
+
+            .box{
+                width: 30px;
+                height: 100%;
+                background-color: $secondColor;
+                @include media(1180) {
+                    width: 20px;
+                }
+                @include media(840) {
+                    width: 15px;
+                }
+            }
+        }
+
+        .title{
+            @include fontSettingEn($size:128,$spacing:8,$color:$secondColor);
+            line-height: 0.6;
+            padding-top: 30px;
+            margin-left: 40px;
+
+            @include media(1400) {
+                font-size: 100px;
+                letter-spacing: 8px;
+            }
+            @include media(1180) {
+                font-size: 72px;
+                letter-spacing: 5.8px;
+            }
+            @include media(840) {
+                font-size: 64px;
+                letter-spacing: 5px;
+            }
+            @include media(640) {
+                font-size: 48px;
+                letter-spacing: 3.8px;
+                padding-top: 20px;
+            }
+            @include media(480) {
+                font-size: 40px;
+                letter-spacing: 3.2px;
+            }
+        }
+    }
+
+    .moreBox{
+        width: calc(50dvw + 700px);
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(10px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
+        &.show{
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+        @include media(1500) {
+            width: calc(100% + 50px);
+        }
+        @include media(1180) {
+            width: calc(100% + 32px);
+        }
+        @include media(840) {
+            width: 100%;
+        }
+        .moreList{
+            margin: 0 -40px;
+            @include media(1400) {
+                margin: 0 -30px;
+            }
+            @include media(1180) {
+                margin: 0 -20px;
+            }
+        }
+        .moreItem{
+            padding: 0 40px;
+            max-width: 40dvw;
+            @include media(1400) {
+                padding: 0 30px;
+            }
+            @include media(1180) {
+                max-width: 45dvw;
+                padding: 0 20px;
+            }
+            @include media(840) {
+                max-width: none;
+            }
+        }
+        .item{
+            background-color: #fff;
+            // border: 1px solid #FFF;
+            padding: 20px;
+        }
+        .img{
+            overflow: hidden;
+            &::before {
+                content: "VISIT WEBSITE";
+                display: block;
+                @include fontSettingEn($size:32,$spacing:20,$color:#FFF);
+                white-space: nowrap;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-20%);
+                z-index: 3;
+                opacity: 0;
+                transition: all 0.3s 0.3s ease-out;
+            }
+            &::after {
+                content: "";
+                width: 100%;
+                height: 100%;
+                background-color: $darkColor;
+                opacity: 0;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                z-index: 2;
+                transition: all 0.5s ease-out;
+            }
+            &:hover{
+                &::before {
+                    opacity: 1;
+                    transform: translate(-50%,-50%);
+                }
+                &::after {
+                    opacity: 0.8;
+                }
+            }
+            img{
+                display: block;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+            .linkWrap{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 5;
+            }
+        }
+
+        .txt{
+            padding: 15px 0 15px 20px;
+            @include media(840) {
+                padding: 10px 0 10px 10px;
+            }
+            .date{
+                @include fontSettingEn($size:24,$color:$secondColor);
+                line-height: 1;
+                text-align: right;
+                @include media(1400) {
+                    font-size: 20px;
+                }
+                @include media(840) {
+                    font-size: 16px;
+                }
+            }
+            .title{
+                @include fontSetting($size:32,$color:$mainColor);
+                font-weight: 300;
+                margin-top: 20px;
+
+                @include media(1400) {
+                    font-size: 24px;
+                    margin-top: 12px;
+                }
+                @include media(840) {
+                    font-size: 20px;
+                }
+            }
+
+        }
+
+        .scrollBar{
+            margin-top: 60px;
+            &::before {
+                content: "";
+                display: block;
+                height: 2px;
+                background-color: #fff;
+                margin-top: 1px;
+            }
+            .line{
+                width: 12.5%;
+                height: 4px;
+                background-color: $mainColor;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: all 0.5s;
+            }
+        }
+    }
+}
+
+/* contactArea */
+.contactArea{
+    @include flex($align:stretch);
+    min-height: 100dvh;
+
+    &.show{
+        .right{
+            &::before {
+                clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%, 0 50%);
+
+                @include media(1040) {
+                    clip-path: polygon(50% 0, 100% 50%, 100% 100%, 0 100%, 0 50%);
+                }
+            }
+            .text{
+                span{
+                    transform: translateY(0);
+                }
+            }
+            .contactBtn{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+    
+    @include media(1040) {
+        min-height: auto;
+    }
+    .left{
+        flex: 1;
+        padding-top: 240px;
+        @include flex($direction:column,$justify:flex-end);
+        @include media(1400) {
+            padding-top: 160px;
+        }
+        @include media(1040) {
+            display: none;
+        }
+        .name{
+            @include fontSettingEn($size:64,$spacing:8);
+            white-space: nowrap;
+            position: absolute;
+            left: 100px;
+            top: 120px;
+            @include media(1700) {
+                font-size: 54px;
+                letter-spacing: 4.4px;
+            }
+            @include media(1400) {
+                top: 80px;
+                left: 60px;
+                font-size: 48px;
+                letter-spacing: 3.8px;
+            }
+            @include media(1180) {
+                font-size: 40px;
+                letter-spacing: 3.2px;
+            }
+        }
+
+        .img{
+            max-width: 360px;
+            width: 70%;
+            transform: rotate(15deg);
+            margin-bottom: -80px;
+            @include media(1700) {
+                width: 60%;
+                max-width: 320px;
+            }
+            @include media(1400) {
+                width: 50%;
+            }
+            @include media(1180) {
+                width: 60%;
+            }
+            img{
+                display: block;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+        }
+    }
+    .right{
+        width: 60%;
+        flex-shrink: 0;
+        @include flex($justify:flex-start);
+        padding-left: 150px;
+        @include media(1400) {
+            padding-left: 100px;
+        }
+        @include media(1040) {
+            width: 100%;
+            padding: 160px 0 120px;
+            justify-content: center;
+        }
+        &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top:0;
+            left: 0;
+            background-color: $secondColor;
+            clip-path: polygon(50% 50%, 100% 50%, 100% 50%, 50% 50%, 0 50%);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0.35, 1);
+
+        }
+
+        .content{
+            @include flex($direction:column);
+        }
+
+        .text{
+            @include fontSettingEn($size:72,$spacing:8,$color:$lightColor);
+            overflow: hidden;
+            @include media(1700) {
+                font-size: 64px;
+                letter-spacing: 5px;
+            }
+            @include media(1400) {
+                font-size: 54px;
+                letter-spacing: 4.4px;
+            }
+            @include media(1180) {
+                font-size: 48px;
+                letter-spacing: 3.8px;
+            }
+            @include media(1040) {
+                font-size: 40px;
+                letter-spacing: 3.2px;
+            }
+            @include media(840) {
+                font-size: 36px;
+            }
+            @include media(480) {
+                font-size: 32px;
+                letter-spacing: 2.5px;
+            }
+
+            span{
+                display: inline-block;
+                transform: translateY(100%);
+                transition: all 0.8s 1s cubic-bezier(0.5, 0, 0.35, 1);
+            }
+        }
+
+        .contactBtn{
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s 1.5s cubic-bezier(0.5, 0, 0.35, 1);
+            .btn{
+                padding: 15px 20px 10px 20px;
+                background-color: $mainColor;
+                @include fontSettingEn($size:32,$spacing:8,$color:#FFF);
+                line-height: 1;
+                transition: all 0.5s;
+                @include media(1400) {
+                    font-size: 24px;
+                    letter-spacing: 2px;
+                }
+                @include media(1040) {
+                    font-size: 20px;
+                }
+                @include media(480) {
+                    font-size: 16px;
+                }
+                &::before {
+                    content: "";
+                    display: block;
+                    width: 0;
+                    height: 100%;
+                    background-color: #FFF;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    pointer-events: none;
+                    transition: all 0.5s;
+                }
+                &:hover{
+                    color: $mainColor;
+                    &::before {
+                        width: 100%;
+                        right: auto;
+                        left: 0;
+                    }
+                }
+            }
+        }
+    }
+} 
+
+/* footer */
+.footer{
+    background-color: $darkColor;
+    text-align: center;
+    @include fontSetting($size:12,$spacing:8,$color:$lightColor);
+    line-height: 1;
+    padding: 15px 24px;
+    @include media(480) {
+        font-size: 10px;
+        letter-spacing: 0.8px;
+        padding: 10px 5px;
+    }
+    @include media(440) {
+        font-size: 8px;
+    }
+}
