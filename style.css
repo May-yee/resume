@@ -2512,6 +2512,11 @@ header .menuBtn::after {
   line-height: 1;
   padding: 15px 24px;
 }
+@media (max-width: 1180px) {
+  .footer {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+}
 @media (max-width: 480px) {
   .footer {
     font-size: 10px;
